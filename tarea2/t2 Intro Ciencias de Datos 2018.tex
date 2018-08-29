@@ -1,0 +1,159 @@
+\documentclass{article}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pictex}
+\usepackage[dvips]{graphics}
+\usepackage{color}
+\usepackage{psfrag}
+\usepackage{verbatim}
+\usepackage{enumerate}
+
+\newcommand {\bc}{\begin{center}}
+\newcommand {\ec}{\end{center}}
+
+
+\pagestyle{empty}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\textwidth}{463pt}
+\setlength{\marginparsep}{0pt}
+\setlength{\marginparwidth}{60pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\textheight}{650pt}
+\setlength{\footskip}{0pt}
+
+\begin{document}
+\begin{sf}
+\bc
+{\Large Tarea 2. Introducci\'on a Ciencias de Datos 2018}
+\ec
+
+\bigskip
+
+\begin{enumerate}
+% 1 Ripley, p.22
+\item Considere tres poblaciones Poisson, con par\'ametros
+$\lambda_1=10$, $\lambda_2=15$ y $\lambda_3=20$ respectivamente.
+\begin{enumerate}
+\item Establezca la regla \'optima de clasificaci\'on,
+bas\'andose en una s\'ola observaci\'on, $x$.
+\item Calcule la probabilidad de error asociado a esta regla \'optima.
+\item Escriba un programa (R o Python) para validar, v\'ia simulaci\'on,
+el nivel de error encontrado en el inciso anterior.
+\item Suponga ahora que, en vez de hacer una s\'ola observaci\'on
+sobre el objeto a clasificar, se hacen dos observaciones independientes,
+$x_1$ y $x_2$. Encuentre la regla \'optima de clasificaci\'on
+pero ahora basada en $\bar{x} = (x_1+x_2)/2$.
+\item ?`Qu\'e tanto mejora el procedimiento, comparado con
+el basado en una sola observaci\'on?.
+\end{enumerate}
+
+
+\bigskip
+
+%2
+\item Ingrese a la p\'agina del repositorio de datos de Machine
+Learning de la Univ. de 
+California en Irvine:
+\begin{center}
+\texttt{https://archive.ics.uci.edu/ml/index.php}
+\end{center}
+\begin{itemize}
+\item Bajar el conjunto de datos "Wine"
+\item Basados en las caracter\'isticas qu\'imicas de los vinos,
+construya un clasificador para determinar el origen de los mismos.
+\end{itemize}
+
+
+
+
+\bigskip
+
+
+
+
+\item Suponga que $x$ es un vector aleatorio $d$-dimensional, con
+media $\mu$ y varianza $\Sigma$ y se tienen las siguientes particiones:
+$$x = \left[\begin{array}{c} x_1 \\ x_2\end{array}\right], \qquad
+\mu = \left[\begin{array}{c} \mu_1 \\ \mu_2\end{array}\right], \qquad
+\Sigma = \left[\begin{array}{cc} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22}\end{array}\right]$$ 
+donde $x_1$ es $d_1 \times 1$ y $x_2$ es $d_2 \times 1$, con $d_1+d_2=d$
+(suponga adem\'as que $\Sigma_{11}$ y $\Sigma_{22}$ son positivas definidas). 
+Considere $y_1=a_1^T x_1$ y $y_2=a_2^T x_2$, donde $a_1$ y $a_2$ son
+vectores no aleatorios de dimensiones $d_1 \times 1$ y $d_2 \times 1$ respectivamente.
+?`Qu\'e valores de $a_1$ y $a_2$ maximizan el cuadrado de la correlaci\'on
+entre $y_1$ y $y_2$?
+\begin{itemize}
+\item Nota 1: Este problema es llamado ```problema de correlaci\'on can\'onica''.
+\item Nota 2: Recuerde que la correlaci\'on entre dos variables aleatorias univariadas se define como
+$$\text{Corr}(u,v) = \frac{\text{Cov}(u,v)}{\sqrt{\text{Var}(u)}  \; \sqrt{\text{Var}(v)}}$$
+\item Nota 3: Si $B$ es positiva definida y $a$ es un vector, entonces
+$$\underset{x}{\text{sup}} \; \frac{(a^Tx)^2}{x^TBx} = a^TB^{-1}a$$
+y el supremo se alcanza cuando $x$ es proporcional a $B^{-1}a$.
+Este resultado es un caso especial del resultado visto en clase acerca de
+la maximizaci\'on del cociente de Rayleigh (cociente de dos formas cuadr\'aticas).
+\item Nota 4: Sugerencia
+$$\underset{a_1,a_2}{\text{sup}} ( \cdot ) = \underset{a_1}{\text{sup}} 
+\left\{ \underset{a_2}{\text{sup}} (\cdot ) \right\}$$
+\end{itemize}
+
+
+
+\bigskip
+
+
+
+
+
+\item Sean $y_1(x), \ldots, y_K(x)$, $K$ funciones lineales de $x$,
+esto es $y_j(x) = w_j^Tx+w_{j0}$, donde las $w_j$'s son vectores y las
+$w_{j0}$'s son escalares. Sean
+$$R_j = \left\{\; x \; | \; y_j(x) \ge y_r(x), \text{ para todo } r \ne j \; \right\}, \quad j=1,\ldots , K$$
+Muestre que $R_j$, $j=1,\ldots , K$ son conjuntos convexos.
+En el contexto de clasificadores lineales, esto quiere decir que
+las regiones de asignaci\'on para cada grupo, son regiones convexas.
+Los procedimientos de clasificaci\'on no siempre inducen regiones convexas
+(e.g. $k$-nn, como veremos). ?`Es deseable tener regiones convexas? (explicar).
+
+
+
+\bigskip
+
+
+\item Considere un conjunto de datos $x_1,\ldots,x_n$,
+los cu\'ales pertenecen a $K$ grupos o poblaciones $C_1,\ldots,C_K$, con $n=n_1+\ldots+n_K$, donde
+$n_i = \# \{C_i\}$. Definamos
+$$\bar{x}_i = \frac{1}{n_i}\sum_{x \in C_i} x, 
+\qquad \bar{\bar{x}} = \frac{1}{n} \sum_{j=1}^n x_j, 
+\qquad S_i = \sum_{x \in C_i} (x-\bar{x}_i)(x-\bar{x}_i)^T, 
+\qquad S_W = \sum_{i=1}^K S_i$$
+$$S_B = \sum_{i=1}^K n_i (\bar{x}_i-\bar{\bar{x}})(\bar{x}_i-\bar{\bar{x}})^T,
+\qquad S_T = \sum_{x \in D} (x-\bar{\bar{x}})(x-\bar{\bar{x}})^T$$
+Puede verse que la matriz de dispersi\'on total, $S_T$,  es la suma de la matriz 
+de dispersi\'on dentro de grupos, $S_W$, y la matriz de dispersi\'on entre grupos, $S_B$,
+esto es, $S_T = S_W+S_B.$
+Considere las siguientes cantidades: 
+$$L_1 = \text{tr}\left( S_T^{-1}S_W \right), \quad \qquad L_2 = \frac{|S_W|}{|S_T|}.$$
+Estas han sido usadas como criterios para determinar
+que tan separados est\'an los grupos. Sean $\lambda_1,\ldots,\lambda_d$ los valores propios de $S_W^{-1}S_B$.
+\textbf{muestre que}:
+$$L_1 = \sum_{i=1}^d \frac{1}{1+\lambda_i}, \qquad L_2 = \prod_{i=1}^d \frac{1}{1+\lambda_i}.$$
+Ayuda: Mostrar que $S_T^{-1}S_W = (I+S_W^{-1}S_B)^{-1}$ y esto ayuda a resolver el problema. 
+
+\end{enumerate}
+
+\bigskip
+
+\underline{\hspace{15cm}}
+
+\bigskip
+
+\noindent \textbf{Fecha de entrega: Jueves 30 de agosto (entregar s\'olo los problemas 1, 2 y 3).}
+
+
+
+
+\end{sf}
+\end{document}
