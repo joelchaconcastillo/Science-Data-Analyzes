@@ -1,5 +1,8 @@
 library("caret")
-library(mvtnorm)
+library("mvtnorm")
+library("GGally")
+library("factoextra")
+library("ggrepel")
 
 
 
@@ -7,10 +10,11 @@ dat =read.table("wine.data", sep=",")
 names(dat) = c("Class","Alcohol", "Malic acid", "Ash","Alcalinity of ash", "Magnesium", "Total phenols", "Flavanoids", "Nonflavanoid phenols", "Proanthocyanins", "Color intensity", "Hue", "OD280/OD315 of diluted wines", "Proline")
 ##library(ElemStatLearn)
 
-
-
-
-
+p = prcomp(dat, center=TRUE, scale=TRUE)
+##PCA análisis....
+postscript("PCA-kmeans.eps")
+fviz_pca_biplot(p, label="var", habillage=kmeans(as.matrix(dat), 3, nstart=20)$cluster, addEllipses=TRUE, ellipse.level=0.95) #+ geom_text_repel(aes(label=rownames(dat)))
+dev.off()
 ##Aplicar clasificador
 
 
@@ -34,7 +38,7 @@ Sp = Sp/(sum(ns)-CLS)
 #datP = ENTRENAMIENTO...
 Np = dim(datP)[1]	
 yP = datP[,1]
-datP[,-1]
+datP = datP[,-1]
 qsP = matrix(0, Np, CLS)
 for(j in 1:CLS){qsP[,j] = dmvnorm(datP, mean=medias[[j]], sigma=Sp)}
 mmP = apply(qsP, 1, max)
